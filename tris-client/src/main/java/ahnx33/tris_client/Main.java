@@ -9,5 +9,6 @@ public class Main {
 
         TicTacToeClient client = new TicTacToeClient(serverIp, port);
         client.play();
+        
     }
 }

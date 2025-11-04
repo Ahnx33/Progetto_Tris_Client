@@ -30,6 +30,8 @@ public class TicTacToeClient {
                 System.out.println("Game started! Wait for the opponent...");
                 String boardUpdate = in.readLine();
                 System.out.println("Board status: " + boardUpdate);
+                printBoard(boardUpdate);
+
             }
 
             if ("WAIT".equals(response)) {
@@ -74,8 +76,10 @@ public class TicTacToeClient {
                 String boardUpdate = in.readLine();
                 System.out.println("Board status: " + boardUpdate);
 
-                // parse boardUpdate if you want to show it as grid …
-                printBoard(boardUpdate);
+                // Show board and check if game ended
+                if (printBoard(boardUpdate)) {
+                    break;
+                }
 
                 // continue loop
             }
@@ -87,9 +91,10 @@ public class TicTacToeClient {
         }
     }
 
-    private void printBoard(String boardMsg) {
+    /* also checks if the game has ended */
+    private boolean printBoard(String boardMsg) {
         if (boardMsg == null)
-            return;
+            return false;
         // boardMsg is like "0,1,2,...,L" or trailing comma etc
         String[] parts = boardMsg.split(",");
         // last part is esito
@@ -104,7 +109,9 @@ public class TicTacToeClient {
             if (i % 3 == 2)
                 System.out.println();
         }
-        System.out.println("Result field: " + (parts.length > 9 ? parts[9] : ""));
+        String result = parts.length > 9 ? parts[9] : "";
+        System.out.println("Result field: " + result);
+        return !result.isEmpty();
     }
 
     public void close() {
